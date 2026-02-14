@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ถึงคุณแฟน 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Poppins:wght@300;500&display=swap');
+
+*{box-sizing:border-box;font-family:'Poppins','Itim',sans-serif;}
+
+body{
+margin:0;
+background:linear-gradient(180deg,#ffc0cb,#ffe6ec);
+overflow:hidden;
+color:#fff;
+}
+
+section{
+display:none;
+width:100vw;height:100vh;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:25px;
+}
+.show{display:flex}
+
+h1,h2,p{text-shadow:0 0 10px rgba(255,105,180,.6);}
+
+input{
+font-size:2rem;
+letter-spacing:8px;
+padding:14px;
+width:260px;
+border-radius:25px;
+border:none;
+outline:none;
+text-align:center;
+color:#ff4d88;
+box-shadow:0 0 20px rgba(255,105,180,.6);
+}
+
+button{
+margin-top:25px;
+padding:14px 40px;
+font-size:1.05rem;
+border:none;
+border-radius:40px;
+background:#ff5fa2;
+color:white;
+cursor:pointer;
+box-shadow:0 0 20px rgba(255,105,180,.7);
+transition:.2s;
+}
+button:hover{transform:scale(1.05)}
+
+#error{
+position:fixed;top:20px;
+background:#ff4d6d;
+padding:10px 25px;
+border-radius:30px;
+display:none;z-index:99;
+animation:shake .3s;
+}
+@keyframes shake{
+0%{transform:translateX(0)}
+25%{transform:translateX(-6px)}
+50%{transform:translateX(6px)}
+75%{transform:translateX(-6px)}
+100%{transform:translateX(0)}
+}
+
+/* IMAGE SLIDER */
+#intro{background:linear-gradient(180deg,#ff9acb,#ffdde9);}
+.slider{
+position:absolute;inset:0;overflow:hidden;z-index:-1;
+}
+.slide{
+position:absolute;width:100%;height:100%;
+object-fit:cover;opacity:0;
+transition:opacity 1.2s ease-in-out;
+}
+.slide.active{opacity:1}
+.slider::after{
+content:"";position:absolute;inset:0;
+background:linear-gradient(to bottom,rgba(0,0,0,.3),rgba(0,0,0,.6));
+}
+
+/* CHAT */
+.chatBox{
+width:100%;max-width:420px;
+background:#fff;border-radius:25px;
+padding:18px;box-shadow:0 0 25px rgba(0,0,0,.25);
+color:#000;
+}
+.chatHeader{font-weight:500;color:#ff4d88;margin-bottom:10px;}
+.time{font-size:.75rem;color:#999;margin:8px 0;}
+.chatMsg{display:flex;margin:7px 0;}
+.left{justify-content:flex-start}
+.right{justify-content:flex-end}
+.bubble{
+max-width:75%;padding:10px 15px;
+border-radius:18px;font-size:.95rem;line-height:1.4;
+}
+.left .bubble{background:#f1f1f1;border-bottom-left-radius:5px;}
+.right .bubble{background:#ff5fa2;color:white;border-bottom-right-radius:5px;}
+
+/* FINAL */
+.final-bg{background:#000}
+.heart-float{
+position:absolute;bottom:-40px;
+animation:floatUp 7s linear infinite;
+}
+@keyframes floatUp{
+from{transform:translateY(0)}
+to{transform:translateY(-120vh)}
+}
+.sparkle{
+position:absolute;width:100%;height:100%;
+background:radial-gradient(circle,rgba(255,182,193,.6),transparent 60%);
+animation:glow 3s infinite alternate;
+}
+@keyframes glow{from{opacity:.2}to{opacity:.8}}
+.final-text{
+font-size:1.6rem;line-height:1.9;
+white-space:pre-wrap;max-width:85%;margin-top:20px;
+}
+
+/* MUSIC BUTTON */
+#musicBtn{
+position:fixed;top:20px;right:20px;
+background:rgba(255,255,255,.25);
+backdrop-filter:blur(6px);
+padding:10px 14px;border-radius:50%;
+cursor:pointer;font-size:1.2rem;z-index:999;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="heartSound" src="shidenbeatsmusic-heartbeat-sound-effect-111218.mp3"></audio>
+<audio id="bgm" src="Cocktail _ Jeff Satur Cover song music cover   .mp3" loop></audio>
+
+<div id="musicBtn" onclick="toggleMusic()">🔊</div>
+<div id="error"></div>
+
+<section id="lock" class="show">
+<h1>💖 ใส่รหัสวันสำคัญ 💖</h1>
+<p>วันที่ทุกอย่างเริ่มต้น</p>
+<input id="code" maxlength="6">
+<button onclick="check()">เปิดหัวใจ</button>
+</section>
+
+<section id="silent" style="background:black">
+<h1>🖤</h1>
+<p>ฟังเสียงหัวใจก่อนนะ</p>
+</section>
+
+<section id="intro">
+<div class="slider">
+<img src="img1.jpg" class="slide active">
+<img src="img2.jpg" class="slide">
+<img src="img3.jpg" class="slide">
+</div>
+<h1>คุณแฟน 💕</h1>
+<p>จากคนแปลกหน้า<br>กลายเป็นคนที่เรายิ้มทุกครั้งที่นึกถึง</p>
+<button onclick="next('timePage')">ไปต่อ</button>
+</section>
+
+<section id="timePage">
+<h2>เรารู้จักกันมาแล้ว 💗</h2>
+<h1 id="countDay"></h1>
+<p>ตั้งแต่วันที่ 16/06/68</p>
+<button onclick="next('chat')">ย้อนกลับไปวันแรก</button>
+</section>
+
+<section id="chat">
+<h2>แชตแรกของเรา 💬</h2>
+<div class="chatBox">
+<div class="chatHeader">Pypo</div>
+<div class="time">15 มิ.ย. 2568</div>
+<div class="chatMsg left"><div class="bubble">สวัสดีค้าบ</div></div>
+<div class="chatMsg left"><div class="bubble">ชื่อไรอ่ะ</div></div>
+<div class="chatMsg right"><div class="bubble">ชื่อม่อนค่ะ</div></div>
+<div class="chatMsg left"><div class="bubble">คณะไรปีไรอ่ะ</div></div>
+<div class="chatMsg right"><div class="bubble">ICT ปี1งับ</div></div>
+<div class="chatMsg left"><div class="bubble">มีไอจีไหม</div></div>
+<div class="chatMsg right"><div class="bubble">มีค่ะ m_xxnii</div></div>
+<div class="time">16 มิ.ย. 2568</div>
+<div class="chatMsg left"><div class="bubble">ขอได้ไหมคะ</div></div>
+<div class="chatMsg right"><div class="bubble">ด้ายยย 💕</div></div>
+</div>
+<p>จากแชตธรรมดา… กลายเป็นความผูกพัน</p>
+<button onclick="next('promise')">ความรู้สึกของเรา</button>
+</section>
+
+<section id="promise">
+<h2>คำสัญญา 🤍</h2>
+<p>
+เค้าสัญญาว่า<br>
+จะอยู่ข้างเธอในวันที่ยิ้ม<br>
+และไม่หายไปในวันที่ร้องไห้<br><br>
+อาจไม่สมบูรณ์แบบ<br>
+แต่รักเธอแบบจริงใจที่สุด
+</p>
+<button onclick="next('final')">สุดท้ายแล้ว</button>
+</section>
+
+<section id="final">
+<h1>อยู่ด้วยกันไปนาน ๆ นะ ✨</h1>
+<button onclick="end()">รักเธอที่สุด</button>
+</section>
+
+<section id="end" class="final-bg">
+<div class="sparkle"></div>
+<h1 style="font-size:2.4rem">คุณแฟน 💖</h1>
+<div id="typing" class="final-text"></div>
+<p id="time" style="margin-top:25px;font-size:.9rem;opacity:.7"></p>
+</section>
+
+<script>
+const correct="160668"
+const text=
+"ถึงคุณแฟน\n\n"+
+"ขอบคุณทุกแชตแรก\n"+
+"ทุกการรอข้อความ\n"+
+"และทุกวันที่ยังเลือกจับมือกัน\n\n"+
+"วันนี้เค้าอาจยังไม่รู้อนาคต\n"+
+"แต่รู้แน่ ๆ ว่า\n\n"+
+"เค้ารักเธอที่สุด 🤍"
+
+function fadeInMusic(){
+bgm.volume=0
+bgm.play()
+let v=0
+const f=setInterval(()=>{
+v+=0.04
+if(v>=0.6){v=0.6;clearInterval(f)}
+bgm.volume=v
+},200)
+}
+
+function check(){
+if(code.value===correct){
+lock.classList.remove("show")
+silent.classList.add("show")
+heartSound.play()
+setTimeout(()=>{
+heartSound.pause()
+silent.classList.remove("show")
+intro.classList.add("show")
+fadeInMusic()
+},4500)
+}else{
+error.innerText="ลองใหม่นะ 🥺"
+error.style.display="block"
+setTimeout(()=>error.style.display="none",2000)
+}
+}
+
+function next(id){
+document.querySelector(".show").classList.remove("show")
+document.getElementById(id).classList.add("show")
+}
+
+function end(){
+next("end")
+let i=0
+typing.innerText=""
+const t=setInterval(()=>{
+typing.innerText+=text[i]
+i++
+if(i>=text.length)clearInterval(t)
+},70)
+
+setInterval(()=>{
+const h=document.createElement("div")
+h.className="heart-float"
+h.innerText="💖"
+h.style.left=Math.random()*100+"vw"
+document.body.appendChild(h)
+setTimeout(()=>h.remove(),7000)
+},350)
+
+setInterval(()=>time.innerText=new Date().toLocaleString(),1000)
+}
+
+const slides=document.querySelectorAll(".slide")
+let s=0
+setInterval(()=>{
+slides[s].classList.remove("active")
+s=(s+1)%slides.length
+slides[s].classList.add("active")
+},4000)
+
+const startDate=new Date("2025-06-16")
+countDay.innerText=
+Math.floor((new Date()-startDate)/(1000*60*60*24))+" วัน"
+
+let musicOn=true
+function toggleMusic(){
+if(musicOn){bgm.pause();musicBtn.innerText="🔇"}
+else{bgm.play();musicBtn.innerText="🔊"}
+musicOn=!musicOn
+}
+</script>
+
+</body>
+</html>
